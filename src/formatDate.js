@@ -17,20 +17,12 @@ function formatDate(date, fromFormat, toFormat) {
       parts[i] = parts[i].slice(-2);
     }
 
-    if (
-      fromFormat[i] === 'YY' &&
-      toFormat[i] === 'YYYY' &&
-      Number(parts[i]) < 30
-    ) {
-      parts[i] = '20' + parts[i];
-    }
-
-    if (
-      fromFormat[i] === 'YY' &&
-      toFormat[i] === 'YYYY' &&
-      Number(parts[i]) >= 30
-    ) {
-      parts[i] = '19' + parts[i];
+    if (fromFormat[i] === 'YY' && toFormat[i] === 'YYYY') {
+      if (Number(parts[i]) < 30) {
+        parts[i] = '20' + parts[i];
+      } else {
+        parts[i] = '19' + parts[i];
+      }
     }
 
     fromMap[fromFormat[i]] = parts[i];
@@ -43,7 +35,7 @@ function formatDate(date, fromFormat, toFormat) {
   // {'DD': '18', 'MM': '02', 'YYYY': '2020'}
 
   for (let i = 0; i < parts.length; i++) {
-    parts[i] = toMap[i];
+    parts[i] = toMap[i] || parts[i];
   }
   // ['18', '02', '2020']
 
